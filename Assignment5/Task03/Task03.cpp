@@ -150,7 +150,7 @@ int main() {
             });
         }
         std::cout << count << " bills: virtual=" << virtualMs
-                  << " switch=" << switchMs << " variant=" << variantMs << '\\n';
+                  << " switch=" << switchMs << " variant=" << variantMs << '\n';
         if (count == 1000) {
             std::cout << "Correctness check: " << virtualSum << " | "
                       << switchSum << " | " << variantSum << '\\n';
