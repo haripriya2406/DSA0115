@@ -6,7 +6,7 @@ class Account {
 public:
     double rate() const { return 3.5; }
     virtual double virtualRate() const { return 3.5; }
-    virtual ~Account() { std::cout << "Account destroyed\\n"; }
+    virtual ~Account() { std::cout << "Account destroyed\n"; }
 };
 
 class SeniorAccount : public Account {
@@ -18,7 +18,7 @@ public:
     double virtualRate() const override { return 4.0; }
     ~SeniorAccount() override {
         delete[] history;
-        std::cout << "SeniorAccount destroyed; history released\\n";
+        std::cout << "SeniorAccount destroyed; history released\n";
     }
 };
 
@@ -29,14 +29,14 @@ int main() {
 
     // Expected: 3.5 4 3.5
     std::cout << p->rate() << ' ' << p->virtualRate() << ' '
-              << slicedCopy.virtualRate() << '\\n';
+              << slicedCopy.virtualRate() << '\n';
 
-    std::cout << "-- Safe polymorphic ownership --\\n";
+    std::cout << "-- Safe polymorphic ownership --\n";
     std::vector<std::unique_ptr<Account>> accounts;
     accounts.push_back(std::make_unique<Account>());
     accounts.push_back(std::make_unique<SeniorAccount>());
     for (const auto& account : accounts)
-        std::cout << account->virtualRate() << '\\n';
+        std::cout << account->virtualRate() << '\n';
 
     // unique_ptr plus a virtual destructor releases the complete derived object.
     return 0;
