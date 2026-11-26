@@ -23,6 +23,7 @@ public:
     virtual ~Bill() noexcept = default;
     virtual double total() const = 0;
     virtual std::string type() const = 0;
+    const std::string& patientName() const noexcept { return patient; }
 };
 
 class OutPatientBill : public Bill {
@@ -88,7 +89,7 @@ void processBill(const Bill& bill, const Payer& payer) {
     const double covered = payer.amountCovered(bill);
     if (covered < 0 || covered > bill.total())
         throw ClaimError("payer returned an invalid covered amount");
-    std::cout << bill.type() << " for " << bill.patient
+    std::cout << bill.type() << " for " << bill.patientName()
               << " | total=" << bill.total()
               << " | " << payer.name() << " covers=" << covered
               << " | balance=" << bill.total() - covered << '\n';
