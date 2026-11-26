@@ -10,7 +10,7 @@ protected:
 public:
     Person(const std::string& n, int i, const std::string& p)
         : name(n), id(i), phone(p) {
-        std::cout << "Person constructed\\n";
+        std::cout << "Person constructed\n";
     }
     virtual ~Person() = default;
 };
@@ -24,7 +24,7 @@ public:
     Student(const std::string& n, int i, const std::string& p,
             const std::string& course, double g)
         : Person(n, i, p), programme(course), cgpa(g) {
-        std::cout << "Student constructed\\n";
+        std::cout << "Student constructed\n";
     }
 };
 
@@ -37,7 +37,7 @@ public:
     Staff(const std::string& n, int i, const std::string& p,
           const std::string& dept, double s)
         : Person(n, i, p), department(dept), salary(s) {
-        std::cout << "Staff constructed\\n";
+        std::cout << "Staff constructed\n";
     }
 };
 
@@ -48,13 +48,13 @@ public:
                       const std::string& dept, double s)
         : Person(n, i, p), Student(n, i, p, course, g),
           Staff(n, i, p, dept, s) {
-        std::cout << "TeachingAssistant constructed\\n";
+        std::cout << "TeachingAssistant constructed\n";
     }
 
     void display() const {
         std::cout << name << " | ID: " << id << " | " << phone
                   << " | " << programme << " | CGPA: " << cgpa
-                  << " | " << department << " | Salary: " << salary << '\\n';
+                  << " | " << department << " | Salary: " << salary << '\n';
     }
 };
 
@@ -67,7 +67,7 @@ public:
         : Person(n, i, p), Student(n, i, p, course, g), fellowship(f) {}
     void display() const {
         std::cout << name << " | Research Scholar | Fellowship: "
-                  << fellowship << '\\n';
+                  << fellowship << '\n';
     }
 };
 
