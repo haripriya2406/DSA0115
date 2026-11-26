@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstddef>
+#include <new>
 #include <limits>
 #include <memory>
 #include <stdexcept>
