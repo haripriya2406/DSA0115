@@ -97,61 +97,63 @@ double exceptionValidation(std::size_t count, int invalidPercent) {
 int main() {
     std::cout << "Virtual / switch / variant benchmark (times in ms)\n";
     for (std::size_t count : {1000U, 1000000U, 10000000U}) {
-        std::vector<std::unique_ptr<BillBase>> virtualBills;
-        std::vector<SwitchBill> switchBills;
-        std::vector<VariantBill> variantBills;
-        virtualBills.reserve(count);
-        switchBills.reserve(count);
-        variantBills.reserve(count);
+        double virtualSum = 0.0, switchSum = 0.0, variantSum = 0.0;
+        double virtualMs = 0.0, switchMs = 0.0, variantMs = 0.0;
 
-        for (std::size_t i = 0; i < count; ++i) {
-            const int kind = static_cast<int>(i % 3);
-            if (kind == 0) {
-                auto bill = std::make_unique<OPVirtual>();
-                bill->consultation = 500.0;
-                bill->tests = 1200.0;
-                virtualBills.push_back(std::move(bill));
-                switchBills.push_back({Kind::OP, 500.0, 1200.0});
-                variantBills.push_back(OPValue{500.0, 1200.0});
-            } else if (kind == 1) {
-                auto bill = std::make_unique<IPVirtual>();
-                bill->room = 7500.0;
-                bill->procedure = 40000.0;
-                virtualBills.push_back(std::move(bill));
-                switchBills.push_back({Kind::IP, 7500.0, 40000.0});
-                variantBills.push_back(IPValue{7500.0, 40000.0});
-            } else {
-                auto bill = std::make_unique<DayVirtual>();
-                bill->packagePrice = 60000.0;
-                virtualBills.push_back(std::move(bill));
-                switchBills.push_back({Kind::DayCare, 60000.0, 0.0});
-                variantBills.push_back(DayValue{60000.0});
+        {
+            std::vector<std::unique_ptr<BillBase>> bills;
+            bills.reserve(count);
+            for (std::size_t i = 0; i < count; ++i) {
+                if (i % 3 == 0) {
+                    auto bill = std::make_unique<OPVirtual>();
+                    bill->consultation = 500.0; bill->tests = 1200.0;
+                    bills.push_back(std::move(bill));
+                } else if (i % 3 == 1) {
+                    auto bill = std::make_unique<IPVirtual>();
+                    bill->room = 7500.0; bill->procedure = 40000.0;
+                    bills.push_back(std::move(bill));
+                } else {
+                    auto bill = std::make_unique<DayVirtual>();
+                    bill->packagePrice = 60000.0;
+                    bills.push_back(std::move(bill));
+                }
             }
+            virtualMs = measureMs([&] {
+                for (const auto& bill : bills) virtualSum += bill->total();
+                return virtualSum;
+            });
         }
-
-        const double virtualMs = measureMs([&] {
-            double sum = 0.0;
-            for (const auto& bill : virtualBills) sum += bill->total();
-            return sum;
-        });
-        const double switchMs = measureMs([&] {
-            double sum = 0.0;
-            for (const auto& bill : switchBills) sum += switchTotal(bill);
-            return sum;
-        });
-        const double variantMs = measureMs([&] {
-            double sum = 0.0;
-            for (const auto& bill : variantBills) sum += variantTotal(bill);
-            return sum;
-        });
+        {
+            std::vector<SwitchBill> bills;
+            bills.reserve(count);
+            for (std::size_t i = 0; i < count; ++i) {
+                if (i % 3 == 0) bills.push_back({Kind::OP, 500.0, 1200.0});
+                else if (i % 3 == 1) bills.push_back({Kind::IP, 7500.0, 40000.0});
+                else bills.push_back({Kind::DayCare, 60000.0, 0.0});
+            }
+            switchMs = measureMs([&] {
+                for (const auto& bill : bills) switchSum += switchTotal(bill);
+                return switchSum;
+            });
+        }
+        {
+            std::vector<VariantBill> bills;
+            bills.reserve(count);
+            for (std::size_t i = 0; i < count; ++i) {
+                if (i % 3 == 0) bills.push_back(OPValue{500.0, 1200.0});
+                else if (i % 3 == 1) bills.push_back(IPValue{7500.0, 40000.0});
+                else bills.push_back(DayValue{60000.0});
+            }
+            variantMs = measureMs([&] {
+                for (const auto& bill : bills) variantSum += variantTotal(bill);
+                return variantSum;
+            });
+        }
         std::cout << count << " bills: virtual=" << virtualMs
-                  << " switch=" << switchMs << " variant=" << variantMs << '\n';
+                  << " switch=" << switchMs << " variant=" << variantMs << '\\n';
         if (count == 1000) {
-            double a = 0.0, b = 0.0, c = 0.0;
-            for (const auto& x : virtualBills) a += x->total();
-            for (const auto& x : switchBills) b += switchTotal(x);
-            for (const auto& x : variantBills) c += variantTotal(x);
-            std::cout << "Correctness check: " << a << " | " << b << " | " << c << '\n';
+            std::cout << "Correctness check: " << virtualSum << " | "
+                      << switchSum << " | " << variantSum << '\\n';
         }
     }
 
