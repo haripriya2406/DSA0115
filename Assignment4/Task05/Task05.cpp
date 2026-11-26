@@ -31,7 +31,7 @@ public:
 
     void display() const {
         for (int i = 0; i < count; ++i)
-            std::cout << items[i] << ": " << prices[i] << '\\n';
+            std::cout << items[i] << ": " << prices[i] << '\n';
     }
 };
 
@@ -53,7 +53,7 @@ int main() {
     Cart* dynamicCart = new Cart;
     dynamicCart->add("Rice", 60).add("Dal", 120).setDiscount(10);
     std::cout << std::fixed << std::setprecision(2)
-              << "Dynamic cart total: " << dynamicCart->total() << '\\n';
+              << "Dynamic cart total: " << dynamicCart->total() << '\n';
     delete dynamicCart;
 
     // Completed chaining example.
@@ -61,7 +61,7 @@ int main() {
     customer.add("Rice", 60).add("Dal", 120).setDiscount(10);
     Cart* customerPointer = &customer;
     customerPointer->add("Oil", 180);
-    std::cout << "Expected chaining total: " << customerPointer->total() << '\\n';
+    std::cout << "Expected chaining total: " << customerPointer->total() << '\n';
 
     // Array of pointers: find the cart with the largest total.
     Cart a, b, c;
@@ -73,6 +73,6 @@ int main() {
     for (Cart** current = carts; current != carts + 3; ++current) {
         if ((*current)->total() > highest->total()) highest = *current;
     }
-    std::cout << "Highest cart total: " << highest->total() << '\\n';
+    std::cout << "Highest cart total: " << highest->total() << '\n';
     return 0;
 }
