@@ -14,7 +14,7 @@ public:
     virtual ~Staff() = default;
     virtual double pay() const = 0;
     virtual void display() const {
-        std::cout << name << " (" << id << ") Pay: " << pay() << '\\n';
+        std::cout << name << " (" << id << ") Pay: " << pay() << '\n';
     }
 };
 
