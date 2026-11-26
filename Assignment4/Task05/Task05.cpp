@@ -60,8 +60,11 @@ int main() {
     Cart customer;
     customer.add("Rice", 60).add("Dal", 120).setDiscount(10);
     Cart* customerPointer = &customer;
+    std::cout << "After Rice and Dal (10% discount): "
+              << customerPointer->total() << '\n'; // 324.00
     customerPointer->add("Oil", 180);
-    std::cout << "Expected chaining total: " << customerPointer->total() << '\n';
+    std::cout << "After adding Oil: " << customerPointer->total()
+              << '\n'; // 486.00; the handout's 324.00 omits this Oil item.
 
     // Array of pointers: find the cart with the largest total.
     Cart a, b, c;
