@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <utility>
 #include <algorithm>
 
 class BillingError : public std::runtime_error {
