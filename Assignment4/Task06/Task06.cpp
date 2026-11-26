@@ -29,7 +29,7 @@ public:
 
     virtual void display(int days) const {
         std::cout << registration << " | Rental charge for " << days
-                  << " day(s): " << charge(days) << '\\n';
+                  << " day(s): " << charge(days) << '\n';
     }
 };
 
@@ -112,8 +112,8 @@ int main() {
     }
 
     std::cout << "Late return charge for " << "CAR-03: "
-              << fleet[2]->returnVehicle(2) << '\\n';
+              << fleet[2]->returnVehicle(2) << '\n';
     std::cout << "Returned CAR-03; available again: "
-              << (fleet[2]->rent() ? "yes" : "no") << '\\n';
+              << (fleet[2]->rent() ? "yes" : "no") << '\n';
     return 0;
 }
