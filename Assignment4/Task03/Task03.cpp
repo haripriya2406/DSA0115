@@ -7,9 +7,9 @@ class Address {
 
 public:
     Address(const std::string& c = "Unknown", int p = 0) : city(c), pin(p) {
-        std::cout << "Address constructed\\n";
+        std::cout << "Address constructed\n";
     }
-    ~Address() { std::cout << "Address destroyed\\n"; }
+    ~Address() { std::cout << "Address destroyed\n"; }
     std::string str() const { return city + "-" + std::to_string(pin); }
 };
 
@@ -18,9 +18,9 @@ class Course {
 
 public:
     explicit Course(const std::string& t) : title(t) {
-        std::cout << "Course constructed\\n";
+        std::cout << "Course constructed\n";
     }
-    ~Course() { std::cout << "Course destroyed\\n"; }
+    ~Course() { std::cout << "Course destroyed\n"; }
 };
 
 class Person {
@@ -32,9 +32,9 @@ protected:
 public:
     Person(const std::string& n, int a, const std::string& city, int pin)
         : name(n), age(a), address(city, pin) {
-        std::cout << "Person constructed\\n";
+        std::cout << "Person constructed\n";
     }
-    virtual ~Person() { std::cout << "Person destroyed\\n"; }
+    virtual ~Person() { std::cout << "Person destroyed\n"; }
 };
 
 class Student : virtual public Person {
@@ -45,13 +45,13 @@ public:
     Student(const std::string& n, int a, long long r,
             const std::string& city, int pin, const std::string& subject)
         : Person(n, a, city, pin), regNo(r), course(subject) {
-        std::cout << "Student constructed\\n";
+        std::cout << "Student constructed\n";
     }
-    ~Student() override { std::cout << "Student destroyed\\n"; }
+    ~Student() override { std::cout << "Student destroyed\n"; }
 
     void print() const {
         std::cout << regNo << ' ' << name << " (" << age << ") "
-                  << address.str() << '\\n';
+                  << address.str() << '\n';
     }
 };
 
@@ -62,9 +62,9 @@ public:
     Staff(const std::string& n, int a, const std::string& city, int pin,
           const std::string& dept)
         : Person(n, a, city, pin), department(dept) {
-        std::cout << "Staff constructed\\n";
+        std::cout << "Staff constructed\n";
     }
-    ~Staff() override { std::cout << "Staff destroyed\\n"; }
+    ~Staff() override { std::cout << "Staff destroyed\n"; }
 };
 
 class TeachingAssistant : public Student, public Staff {
@@ -75,10 +75,10 @@ public:
         : Person(n, a, city, pin),
           Student(n, a, r, city, pin, subject),
           Staff(n, a, city, pin, dept) {
-        std::cout << "TeachingAssistant constructed\\n";
+        std::cout << "TeachingAssistant constructed\n";
     }
     ~TeachingAssistant() override {
-        std::cout << "TeachingAssistant destroyed\\n";
+        std::cout << "TeachingAssistant destroyed\n";
     }
 };
 
@@ -93,29 +93,29 @@ public:
         : Person(n, a, city, pin), regNo(r), home(city, pin) {}
     void print() const {
         std::cout << regNo << ' ' << name << " (" << age << ") "
-                  << home.str() << '\\n';
+                  << home.str() << '\n';
     }
 };
 
 int main() {
-    std::cout << "-- Student --\\n";
+    std::cout << "-- Student --\n";
     {
         Student s("Kavya", 19, 192311001, "Salem", 636001, "C++");
         s.print();
     }
 
-    std::cout << "-- Staff --\\n";
+    std::cout << "-- Staff --\n";
     {
         Staff member("Ravi", 35, "Chennai", 600001, "IT");
     }
 
-    std::cout << "-- Teaching Assistant --\\n";
+    std::cout << "-- Teaching Assistant --\n";
     {
         TeachingAssistant ta("Meena", 24, 192311002, "Madurai", 625001,
                              "OOP", "IT");
     }
 
-    std::cout << "-- Initializer-list example --\\n";
+    std::cout << "-- Initializer-list example --\n";
     AddressStudent example("Kavya", 19, 192311001, "Salem", 636001);
     example.print();
     return 0;
